@@ -162,7 +162,7 @@ class RectangleMatrix extends com.company.Matrix {
         if (M.length == 2) {
             return M[0][0] * M[1][1] - M[0][1] * M[1][0];
         }
-        double determinant;
+        double determinant = 0;
         for (int c = 0; c < M.length; c++) {
             determinant += (Math.pow((-1), c) * M[0][c] * determinant(minor(M, 0, c)));
         }
