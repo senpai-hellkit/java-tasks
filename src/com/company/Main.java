@@ -145,7 +145,7 @@ class RectangleMatrix extends com.company.Matrix {
     double[][] minor(double[][] M, int i, int j) {
         double[][] minor = new double[M.length-1][M.length-1];
         for (int k = 0; k < M.length; k++) {
-            for (int l = 0; k != l && l < M[k].length; l++) {
+            for (int l = 0; k != i && l < M[k].length; l++) {
                 if (l != j) {
                     minor[(k < i) ? k : k - 1][(l < j) ? l : l - 1] = M[k][l];
                 }
@@ -162,7 +162,7 @@ class RectangleMatrix extends com.company.Matrix {
         if (M.length == 2) {
             return M[0][0] * M[1][1] - M[0][1] * M[1][0];
         }
-        double determinant = 0;
+        double determinant;
         for (int c = 0; c < M.length; c++) {
             determinant += (Math.pow((-1), c) * M[0][c] * determinant(minor(M, 0, c)));
         }
