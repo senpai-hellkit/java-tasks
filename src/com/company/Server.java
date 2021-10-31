@@ -1,7 +1,6 @@
 package com.company;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,18 +11,39 @@ public class Server {
         if (verify(arg, pwd)) {
             System.out.println("Auth");
         } else {
-            // todo: Продумать этот ход
-            System.out.println("Try");
+            System.out.println("Попробуйте еще раз");
         }
     }
 
-    boolean verify(String arg, String pwd) {
-        // todo: верификацию из файла
-        return true;
+     boolean verify(String login, String password){
+        BufferedReader br = null;
+        String pwd = "";
+         try {
+             pwd = generateHash(password);
+         } catch (NoSuchAlgorithmException e) {
+             e.printStackTrace();
+         }
+         try {
+            br = new BufferedReader(new FileReader("login-password.txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (login.equals(line.split(" - ")[0]) && pwd.equals(line.split(" - ")[1])){
+                    return true;
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                br.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return false;
     }
 
-    String coder(String pwd) {
-        // todo: hash code password
+     String coder(String pwd) {
         String password = null;
         try {
             password = generateHash(pwd);
@@ -33,36 +53,32 @@ public class Server {
         return password;
     }
 
-    private String generateHash(String pwd) throws NoSuchAlgorithmException {
+     private String generateHash(String pwd) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.reset();
         byte[] hash = digest.digest(pwd.getBytes());
         return bytesToStringHex(hash);
     }
 
-    public String bytesToStringHex(byte[] hash) {
+     public String bytesToStringHex(byte[] hash) {
         char[] hexChars = new char[hash.length * 2];
         for (int i = 0; i < hash.length; i++) {
             int v = hash[i] & 0xFF;
-            hexChars[i * 2] = hexArray[v >>> 4];
-            hexChars[i * 2 + 1] = hexArray[v & 0x0F];
+            hexChars[i * 2] = this.hexArray[v >>> 4];
+            hexChars[i * 2 + 1] = this.hexArray[v & 0x0F];
         }
         return new String(hexChars);
     }
 
-    void writeData(String login, String arg) {
-        try
+    void writeData(String login, String password) {
+        try (FileWriter file = new FileWriter("login-password.txt", true);
+             BufferedWriter br = new BufferedWriter(file);
+             PrintWriter pw = new PrintWriter(br);)
         {
-            FileWriter writer = new FileWriter("code.txt", false);
-            writer.write(login + " - " + coder(arg));
-            writer.flush();
+            pw.println(login + " - " + coder(password));
         }
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
-    }
-
-
-    void tryAgain() {
     }
 }

@@ -2,22 +2,20 @@ package com.company;
 
 import java.util.Scanner;
 
-
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Auth auth = new Auth();
-        Server server = new Server();
-
+        System.out.print("reg / log: ");
+        String inp = input.next();
         System.out.print("login: ");
         String login = input.next();
-        auth.fillLogin(login);
-        System.out.print("code: ");
-        String code = input.next();
-        if (server.verify(login, code)) {
-            server.auth(login, code);
+        System.out.print("password: ");
+        String password = input.next();
+        Auth auth = new Auth();
+        if (inp.equals("log")){
+            auth.login(login, password);
         } else {
-            server.tryAgain();
+            auth.register(login, password);
         }
     }
 }
