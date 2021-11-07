@@ -1,21 +1,18 @@
 package com.company;
 
-import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("reg / log: ");
-        String inp = input.next();
-        System.out.print("login: ");
-        String login = input.next();
-        System.out.print("password: ");
-        String password = input.next();
-        Auth auth = new Auth();
-        if (inp.equals("log")){
-            auth.login(login, password);
-        } else {
-            auth.register(login, password);
-        }
+    public static void main(String[] args) throws Exception {
+        RgbMaster rbgMaster = new RgbMaster("in_image.jpeg");
+        ImageFunctionsImpl imageFunc = new ImageFunctionsImpl();
+        rbgMaster.changeImage(imageFunc::onlyRed);
+        rbgMaster.changeImage(imageFunc::onlyBlue);
+        rbgMaster.changeImage(imageFunc::onlyGreen);
+        rbgMaster.changeImage(imageFunc::greyScale);
+        rbgMaster.changeImage(imageFunc::sepia);
+        rbgMaster.changeImage(imageFunc::inversion);
+        rbgMaster.iterateInImage(imageFunc::fft);
+        System.out.println(imageFunc.frequency);
+        rbgMaster.save("out_image.png");
     }
 }
