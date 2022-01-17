@@ -1,35 +1,56 @@
 package com.company;
 
-import java.lang.reflect.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-        Class<TaskOne> cls = TaskOne.class;
-        final Method[] methods = cls.getDeclaredMethods();
-        final Field[] fields = cls.getDeclaredFields();
-        System.out.println(" - " + cls.getName());
-        for (Field field : fields) {
-            System.out.println("  + " + field.getName());
-        }
-        for (Method method : methods) {
-            System.out.println("  * " +  method.getName());
-        }
+        Class parentClass = Test.class;
+        int spaces = 0;
 
-//        System.out.println("\n######### task 1 ########\n");
-//        TaskOne taskOne = new TaskOne();
-//        taskOne.main();
-//        System.out.println("\n######### task 2 ########\n");
-//        TaskTwo taskTwo = new TaskTwo();
-//        taskTwo.main();
-//        System.out.println("\n######### task 3 ########\n");
-//        TaskThree taskThree = new TaskThree();
-//        taskThree.main();
-//        System.out.println("\n######### task 4 ########\n");
-//        TaskFour taskFour = new TaskFour();
-//        taskFour.main();
-//        System.out.println("\n######### task 5 ########\n");
-//        TaskFive taskFive = new TaskFive();
-//        taskFive.main();
+        while (parentClass != Object.class) {
+            spaces += 2;
+            int finalSpaces = spaces;
+
+            System.out.println(parentClass.getName());
+            System.out.println(Arrays.stream(parentClass.getConstructors())
+                    .map(constructor -> " ".repeat(finalSpaces) + "- " + constructor)
+                    .collect(Collectors.joining("\n")));
+            System.out.println(Arrays.stream(parentClass.getFields())
+                    .map(field -> " ".repeat(finalSpaces) + "+ " +field.getName())
+                    .collect(Collectors.joining("\n")));
+            System.out.println(Arrays.stream(parentClass.getDeclaredMethods())
+                    .map(field -> " ".repeat(finalSpaces) + "* " +field)
+                    .collect(Collectors.joining("\n")));
+
+            parentClass = parentClass.getSuperclass();
+        }
+    }
+}
+
+
+class Test {
+    public int age;
+    public Test(int age) {
+        this.age = age;
+    }
+    public String getInfo() {
+        return "age: " + this.age;
+    }
+}
+
+class Test1 extends Test {
+    public String name;
+    public String lastName;
+    public Test1(int age, String name, String lastName) {
+        super(age);
+        this.name = name;
+        this.lastName = lastName;
+    }
+    public String getInfo() {
+        return "test name: " + this.name +
+                " last name: " + this.lastName +
+                " age: " + this.age;
     }
 }
