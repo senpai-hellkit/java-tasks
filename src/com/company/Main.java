@@ -1,22 +1,19 @@
 package com.company;
 
 import java.lang.reflect.*;
-import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        System.out.println(TaskOne.class);
         Class<TaskOne> taskOneClass = TaskOne.class;
         final Method[] methods = taskOneClass.getDeclaredMethods();
         final Field[] fields = taskOneClass.getDeclaredFields();
-        final taskOneClass.getDeclaredClasses();
+        System.out.println(" - " + taskOneClass.getName());
         for (Field field : fields) {
-            System.out.println(field);
+            System.out.println("  + " + field.getName());
         }
         for (Method method : methods) {
-            System.out.println(method);
+            System.out.println("  * " +  method.getName());
         }
 //        System.out.println("\n######### task 1 ########\n");
 //        TaskOne taskOne = new TaskOne();
