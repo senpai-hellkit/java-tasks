@@ -5,16 +5,17 @@ import java.lang.reflect.*;
 public class Main {
 
     public static void main(String[] args) {
-        Class<TaskOne> taskOneClass = TaskOne.class;
-        final Method[] methods = taskOneClass.getDeclaredMethods();
-        final Field[] fields = taskOneClass.getDeclaredFields();
-        System.out.println(" - " + taskOneClass.getName());
+        Class<TaskOne> cls = TaskOne.class;
+        final Method[] methods = cls.getDeclaredMethods();
+        final Field[] fields = cls.getDeclaredFields();
+        System.out.println(" - " + cls.getName());
         for (Field field : fields) {
             System.out.println("  + " + field.getName());
         }
         for (Method method : methods) {
             System.out.println("  * " +  method.getName());
         }
+
 //        System.out.println("\n######### task 1 ########\n");
 //        TaskOne taskOne = new TaskOne();
 //        taskOne.main();

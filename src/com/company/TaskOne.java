@@ -18,6 +18,10 @@ public class TaskOne {
     protected static int n;
     protected static int[] arr;
 
+    TaskOne (String text, int age) {
+        System.out.println(text + age);
+    }
+
     public static void getData() {
         System.out.print("Кол-во эл в массиве: ");
         n = in.nextInt();
