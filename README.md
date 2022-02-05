@@ -1,2 +1,2 @@
-# java-tasks
+# Eshop task
 Help me plz...
