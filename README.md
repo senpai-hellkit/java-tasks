@@ -1,2 +1,1 @@
-# Eshop task
-Help me plz...
+# Retryer task
